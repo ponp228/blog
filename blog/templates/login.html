@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Вход
+{% endblock %}
+{% block content %}
+<div class="flex">
+     <form action="{% url 'login_url' %}" method="POST" class="login">
+         {% csrf_token %}
+         <p>
+            <input type="text" name="username" class="form-control" placeholder="Ваш ник">
+         </p>
+         <p>
+            <input type="password" name="password" class="form-control" placeholder="Ваш пароль">
+         </p>
+         <p>
+            <button class="btn btn-outline-success">Вход</button>
+         </p>
+     </form>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{post.title}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+     <div class="img">
+         <img src="{{post.image.url}}" alt="">
+     </div>
+     <div class="text">
+          <h2>{{post.title}}</h2>
+          <p>{{post.text}}</p>
+          <p class="text-end">{{post.created_at|date:'d-F-Y'}}</p>
+     </div>
+     <div class="comment">
+         {% if not user.is_authenticated %}
+         <p>
+            простите вы не <a href="{%url 'login_url'%}">Вошли</a> в акаунт
+            Если у вас нет аккаунта то <a href="{% url 'register' %}">Зарегистрируйтесь</a>
+         </p>
+         {% else %}
+         <form method="POST" action="{% url 'comment' post.slug %}">
+             {% csrf_token %}
+             <textarea name="comment" placeholder="Ваш коментарий..." id="" class="form-control"></textarea>
+             <button class="btn btn-primary">Отправьте</button>
+         </form>
+         {% endif %}
+         {% for comment in post.comment_set.all %}
+         <div class="singl_comment">
+             <h2>{{comment.author.username}}</h2>
+             <hr>
+             <p>{{comment.text}}</p>
+             <p class="text-end">{{comment.date|timesince}} назад</p>
+         </div>
+         {% empty %}
+         <p class="text-center">Коментариев нет</p>
+         {% endfor %}
+     </div>
+</div>
+{% endblock %}

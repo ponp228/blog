@@ -1,0 +1,71 @@
+{% extends 'base.html'%}
+
+{% block title %}
+Главная
+{% endblock %}
+
+{% block content %}
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" >
+  
+  <div class="carousel-inner">
+    {% for slide in slides %}
+    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <img src="{{slide.image.url}}" class="d-block w-100" height="500px" style="object-fit: cover; object-position: top;"  alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <a href="{{slide.get_link}}">
+          <h5>{{slide.title}}</h5>
+        </a>
+        
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="container">
+  <h2>последние новости</h2>
+  <hr>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for post in posts %}
+    <div class="col">
+      <div class="card">
+        <img src="{{post.image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="{{post.get_link}}">
+          <h5 class="card-title">{{post.title}}</h5>
+          </a>
+          <p class="card-text">{{post.created_at|date:'d-F-Y'}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <hr>
+  <h2>Категории</h2>
+  <hr>
+  <div class="row row-cols-1 row-cols-md-6 g-4">
+    {% for category in categories %}
+    <div class="col">
+
+      <div class="card">
+        <img src="{{category.image.url}}" style="height: 100px; object-fit: cover;" class="card-img-top" alt="...">
+        <div class="card-body">
+          <a href="{% url 'category_detail_url' category.slug %}">
+            <h5 class="card-title">{{category.title}}</h5>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>   
+  </div>
+{% endblock %}

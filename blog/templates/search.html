@@ -1,0 +1,28 @@
+{% extends 'base.html'%}
+
+{% block title %}
+Поиск по запросу {{query}}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h2>Посты по запросу {{category.title}}</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for post in posts %}
+            <div class="col">
+              <div class="card">
+                <img src="{{post.image.url}}" style="height: 200px; object-fit: cover;" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <a href="{{post.get_link}}">
+                  <h5 class="card-title">{{post.title}}</h5>
+                  </a>
+                  <p class="card-text">{{post.created_at|date:'d-F-Y'}}</p>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <p>Простите поиск по запросу {{query}} не дал результатов</p>
+            {% endfor %}
+        </div>
+</div>
+{% endblock %}
